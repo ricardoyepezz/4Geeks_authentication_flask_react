@@ -1,49 +1,45 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+  return {
+    store: {
+      message: null,
+      token: null,
+    },
+    actions: {
+      signup: (formData, history) => {
+        fetch(
+          "https://3001-ricardoyepe-4geeksauthe-0lptx3sjp9q.ws-us47.gitpod.io/api/signup",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Data From Flux", data);
+            history.push("/");
+            window.location.reload();
+          })
+          .catch((error) =>
+            console.log("Ha ocurrido un error en el registro", error)
+          );
+      },
+      login: (formData, history) => {
+        fetch(process.env.BACKEND_URL + `/api/token`, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setStore({ token: data });
+            localStorage.setItem("token", JSON.stringify(data));
+            //history.push("/user");
+            window.location.reload();
+          })
+          .catch((error) => console.log("Login Error", error));
+      },
+    },
+  };
 };
 
 export default getState;
