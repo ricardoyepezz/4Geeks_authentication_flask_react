@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 import "../../styles/home.css";
 import background from "../../img/cool-background.png";
+import { Banner } from "../component/Banner";
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
+  let token = sessionStorage.getItem("token");
 
   return (
     <div className="m-0 vh-100 row justify-content-center align-items-center">
@@ -15,12 +15,13 @@ export const Home = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <a type="button" className="btn btn-lg m-3" href="/login">
-          Log In
-        </a>
-        <a type="button" className="btn btn-lg m-3" href="/signup">
-          Sign Up
-        </a>
+        {!token || token === null || token === undefined ? (
+          <>
+            <span>Please login or register 👽</span>
+          </>
+        ) : (
+          <Banner />
+        )}
       </div>
     </div>
   );

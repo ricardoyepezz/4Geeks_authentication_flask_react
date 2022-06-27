@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       signup: (formData, history) => {
         fetch(
-          "https://3001-ricardoyepe-4geeksauthe-0lptx3sjp9q.ws-us47.gitpod.io/api/signup",
+          "https://3001-ricardoyepe-4geeksauthe-i2a6u0xbhf2.ws-us47.gitpod.io/api/signup",
           {
             method: "POST",
             body: formData,
@@ -24,19 +24,28 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
       },
       login: (formData, history) => {
-        fetch(process.env.BACKEND_URL + `/api/token`, {
-          method: "POST",
-          body: formData,
-        })
+        fetch(
+          "https://3001-ricardoyepe-4geeksauthe-i2a6u0xbhf2.ws-us47.gitpod.io/api/token",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
             setStore({ token: data });
-            localStorage.setItem("token", JSON.stringify(data));
-            //history.push("/user");
+            sessionStorage.setItem("token", JSON.stringify(data));
+            history.push("/Private");
             window.location.reload();
           })
           .catch((error) => console.log("Login Error", error));
+      },
+      logout: (history) => {
+        sessionStorage.clear();
+        console.log("Login out successfull");
+        setStore({ token: null });
+        history.push("/");
       },
     },
   };
