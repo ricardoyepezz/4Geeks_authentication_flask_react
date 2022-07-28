@@ -9,7 +9,7 @@ The authentication system consists of the following parts:
 3. Validation: Any page considered "private" should always validate that the current user is valid, otherwise the page should redirect the user to log back in.
 4. Logout – At any time, the user should be able to hit “logout” on the navigation bar and they will be redirected to the login path.
 
-![Alt Text](/src/img/Animation1.gif)
+![Alt Text](/src/front/img/Animation2.gif)
 
 ### Back-End Manual Installation:
 
@@ -31,8 +31,7 @@ It is recomended to install the backend first, make sure you have Python 3.8, Pi
 
 ### Front-End Manual Installation:
 
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
+- Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
 
 1. Install the packages: `$ npm install`
 2. Start coding! start the webpack dev server `$ npm run start`
-
